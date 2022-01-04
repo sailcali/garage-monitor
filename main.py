@@ -14,7 +14,7 @@ GPIO.setwarnings(False)
 GPIO_PIN = 17
 GPIO.setup(GPIO_PIN, GPIO.OUT)
 
-temp_response = requests.get(f'http://{SERVER_IP}/temps/current_temps')
+temp_response = requests.get(f'http://{SERVER_IP}/api/current_temps')
 current_temps = temp_response.json()
 garage_response = requests.get(f'http://{GARAGE_IP}/get-status')
 garage_temps = garage_response.json()
