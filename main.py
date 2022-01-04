@@ -19,7 +19,7 @@ current_temps = temp_response.json()
 garage_response = requests.get(f'http://{GARAGE_IP}/get-status')
 garage_temps = garage_response.json()
 
-if current_temps['thermostat_temp'] <= garage_temps['temperature']:
+if current_temps['living_room_temp'] <= garage_temps['temperature']:
     if not GPIO.input(GPIO_PIN):
         GPIO.output(GPIO_PIN, GPIO.HIGH)
 else:
