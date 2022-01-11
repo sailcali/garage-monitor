@@ -6,11 +6,15 @@ from dotenv import load_dotenv
 import os
 import LCD1602
 import time
-
+import board
+from adafruit_bme280 import basic as adafruit_bme280
+i2c = board.I2C()
+bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x77)
+local_farenheight = bme280.temperature * (9/5) + 32
 def setup():
 	LCD1602.init(0x27, 1)	# init(slave address, background light)
-	LCD1602.write(0, 0, 'Current Temp:')
-	LCD1602.write(1, 1, f"{current_temps['living_room_temp']}*F")
+	LCD1602.write(0, 0, 'Local     Garage')
+	LCD1602.write(1, 0, f"{int(garage_temps['temperature'])}*F        {int(local_farenheight)}*F")
 	time.sleep(2)
 
 def destroy():
