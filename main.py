@@ -13,12 +13,14 @@ bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x77)
 local_farenheight = bme280.temperature * (9/5) + 32
 def setup():
 	LCD1602.init(0x27, 1)	# init(slave address, background light)
-	LCD1602.write(0, 0, 'Local     Garage')
-	LCD1602.write(1, 0, f"{int(garage_temps['temperature'])}*F        {int(local_farenheight)}*F")
+	LCD1602.write(0, 0, 'Garage     Local')
+	LCD1602.write(0, 1, f"{int(garage_temps['temperature'])}*F     {int(bme280.humidity)}%{int(local_farenheight)}*F")
 	time.sleep(2)
 
 def destroy():
 	LCD1602.clear()
+print(bme280.humidity)
+print(bme280.humidity)
 
 
 load_dotenv()
