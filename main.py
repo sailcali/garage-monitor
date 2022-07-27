@@ -26,8 +26,8 @@ print(bme280.humidity)
 load_dotenv()
 SERVER_IP = os.environ.get("SERVER_IP")
 GARAGE_IP = os.environ.get("GARAGE_IP")
-VENSTAR_IP = os.environ.get("VENSTAR_IP")
-VENSTAR_SENSOR_URL = 'http://' + VENSTAR_IP + '/query/sensors'
+#VENSTAR_IP = os.environ.get("VENSTAR_IP")
+#VENSTAR_SENSOR_URL = 'http://' + VENSTAR_IP + '/query/sensors'
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -36,18 +36,22 @@ LOCAL_PIN = 27
 GPIO.setup(LIVING_RM_PIN, GPIO.OUT)
 GPIO.setup(LOCAL_PIN, GPIO.OUT)
 
-temp_response = requests.get(f'http://{SERVER_IP}/api/current_temps')
-current_temps = temp_response.json()
-garage_response = requests.get(f'http://{GARAGE_IP}/get-status')
-garage_temps = garage_response.json()
-sensor_response = requests.get(VENSTAR_SENSOR_URL)
-sensors = sensor_response.json()
+#temp_response = requests.get(f'http://{SERVER_IP}/api/current_temps')
+#current_temps = temp_response.json()
+#garage_response = requests.get(f'http://{GARAGE_IP}/get-status')
+#garage_temps = garage_response.json()
+#sensor_response = requests.get(VENSTAR_SENSOR_URL)
+#sensors = sensor_response.json()
 
-remote_temp = 'N/A' # set to N/A in case its not found!
-for sensor in sensors['sensors']:
-    if sensor['name'] == 'Remote':
-        remote_temp = sensor['temp']
-
+#remote_temp = 'N/A' # set to N/A in case its not found!
+#for sensor in sensors['sensors']:
+#    if sensor['name'] == 'Remote':
+remote_temp = 65
+current_temps = {}
+garage_temps = {}
+current_temps['living_room_temp'] = 65
+current_temps['thermostat_temp'] = 65
+garage_temps['temperature'] = 65
 if current_temps['living_room_temp'] <= garage_temps['temperature']:
     if not GPIO.input(LIVING_RM_PIN):
         GPIO.output(LIVING_RM_PIN, GPIO.HIGH)
